@@ -67,9 +67,7 @@ INSERT INTO OrderDetails (OrderID, PizzaID, Quantity) VALUES
 (3, (SELECT PizzaID FROM Pizzas WHERE PizzaType = 'Meat Lovers'), 1),
 (3, (SELECT PizzaID FROM Pizzas WHERE PizzaType = 'Hawaiian'), 1);
 
-select * from orderdetails;
-select * from customers;
-select * from orders;
+
 
 -- Q4: Total spending by each customer
 SELECT c.Name, SUM(p.Price * od.Quantity) AS TotalSpent
