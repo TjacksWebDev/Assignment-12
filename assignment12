@@ -7,35 +7,38 @@ drop table if exists Customers;
 drop table if exists Pizzas;
 
 -- creation of Customers table.
-create table Customers(
-	CustomerID INT AUTO_INCREMENT primary key,
-    Name varchar(255) not null,
-    PhoneNumber varchar(20) NOT NULL
+CREATE TABLE Customers (
+    CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    PhoneNumber VARCHAR(20) NOT NULL
 );
     
 -- creation of Pizzas Table.
-create table Pizzas (
-	PizzaID int auto_increment Primary Key,
-    PizzaType varchar(250) not null,
-    Price Decimal(5,2) not null
+CREATE TABLE Pizzas (
+    PizzaID INT AUTO_INCREMENT PRIMARY KEY,
+    PizzaType VARCHAR(250) NOT NULL,
+    Price DECIMAL(5 , 2 ) NOT NULL
 );
 
 -- creation of Orders Table.
-create table Orders(
-	OrderID int auto_increment Primary Key,
-    CustomerID int,
-    OrderDateTime DateTime not null,
-	Foreign Key (CustomerID) References Customers(CustomerID)
+CREATE TABLE Orders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT,
+    OrderDateTime DATETIME NOT NULL,
+    FOREIGN KEY (CustomerID)
+        REFERENCES Customers (CustomerID)
 );
 
 -- creation of OrderDetails table.
-create table OrderDetails(
-	OrderDetailID int auto_increment Primary Key,
-    OrderID int,
-    PizzaID int,
-    Quantity int not null,
-    Foreign Key (OrderID) References Orders(OrderID),
-    Foreign Key (PizzaID) References Pizzas (PizzaID)
+CREATE TABLE OrderDetails (
+    OrderDetailID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT,
+    PizzaID INT,
+    Quantity INT NOT NULL,
+    FOREIGN KEY (OrderID)
+        REFERENCES Orders (OrderID),
+    FOREIGN KEY (PizzaID)
+        REFERENCES Pizzas (PizzaID)
 );
 
 -- insert Pizzas.
@@ -66,17 +69,29 @@ insert into OrderDetails(OrderID, PizzaID, Quantity) values
 (3,(Select PizzaID from Pizzas where PizzaType= 'Hawaiian'),1);
 
 -- total spending by each Customer.
-select c.Name, SUM(p.Price * od.Quantity) AS TotalSpent
-from Customers c
-join Orders o on c.CustomerID = o.CustomerID
-join OrderDetails od on o.OrderID = od.OrderID
-join Pizzas p on od.PizzaID = p.PizzaID
-group by c.Name;
+SELECT 
+    c.Name, SUM(p.Price * od.Quantity) AS TotalSpent
+FROM
+    Customers c
+        JOIN
+    Orders o ON c.CustomerID = o.CustomerID
+        JOIN
+    OrderDetails od ON o.OrderID = od.OrderID
+        JOIN
+    Pizzas p ON od.PizzaID = p.PizzaID
+GROUP BY c.Name;
 
 -- total spending by each Customer on each date.
-select c.Name, o.OrderDateTime, SUM(p.Price * od.Quantity) AS TotalSpent
-from Customers c
-join Orders o on c.CustomerID = o.CustomerID
-join OrderDetails od on o.OrderID = od.OrderID
-join Pizzas p on od.PizzaID = p.PizzaID
-group by c.Name, o.OrderDateTime;
+SELECT 
+    c.Name,
+    o.OrderDateTime,
+    SUM(p.Price * od.Quantity) AS TotalSpent
+FROM
+    Customers c
+        JOIN
+    Orders o ON c.CustomerID = o.CustomerID
+        JOIN
+    OrderDetails od ON o.OrderID = od.OrderID
+        JOIN
+    Pizzas p ON od.PizzaID = p.PizzaID
+GROUP BY c.Name , o.OrderDateTime;
