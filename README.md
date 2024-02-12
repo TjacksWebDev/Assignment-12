@@ -1,4 +1,4 @@
-Assignment #12
+#Assignment #12
  
 
 This assignment will focus on your abilities to read requirements and turn them into a good database design.
@@ -48,9 +48,9 @@ Q3: Populate your database with three orders
  
 Now that you’ve created your database in MySQL, it’s time to populate it with values. Create three separate orders with these values:
 
- 
+ ```
 
-Order #1:
+  Order #1:
 
  
 Customer: Trevor Page
@@ -86,6 +86,8 @@ Phone number: 226-555-4982
 Order date/time: 9/10/2014 9:47:00 AM
 
 Pizza Order: 1x Meat Lovers Pizza, 1x Hawaiian Pizza
+
+```
 
  
 Q4: Now the restaurant would like to know which customers are spending the most money at their establishment. Write a SQL query which will tell them how much money each individual customer has spent at their restaurant
