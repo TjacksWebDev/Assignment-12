@@ -81,10 +81,10 @@ FROM
     Pizzas p ON od.PizzaID = p.PizzaID
 GROUP BY c.Name;
 
--- total spending by each Customer on each date.
+-- Q5- total spending by each customer on each date
 SELECT 
     c.Name,
-    o.OrderDateTime,
+    DATE(o.OrderDateTime) as OrderDate, -- Extracts the date part from the OrderDateTime for MySQL
     SUM(p.Price * od.Quantity) AS TotalSpent
 FROM
     Customers c
@@ -93,5 +93,8 @@ FROM
         JOIN
     OrderDetails od ON o.OrderID = od.OrderID
         JOIN
+    Pizzas p ON od.PizzaID = p.PizzaID
+GROUP BY c.Name, DATE(o.OrderDateTime); -- Groups by customer name and the date part of OrderDateTime
+
     Pizzas p ON od.PizzaID = p.PizzaID
 GROUP BY c.Name , o.OrderDateTime;
